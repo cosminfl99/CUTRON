@@ -27,6 +27,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -38,7 +39,7 @@ body {
   color: var(--ink);
   font-family: Inter, Aptos, "Segoe UI", Arial, sans-serif;
   letter-spacing: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body::before {
@@ -111,11 +112,11 @@ select {
   width: min(100%, var(--section-max));
   height: 100%;
   margin: 0 auto;
-  padding: 0 36px;
+  padding: 0 28px;
   display: grid;
   grid-template-columns: auto 1fr auto auto auto;
   align-items: center;
-  gap: 28px;
+  gap: 18px;
 }
 
 .brand {
