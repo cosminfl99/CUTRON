@@ -1,4 +1,16 @@
-import { assets, caseStudies, megaMenu, nav, pages, performance, products, why } from "./data.js";
+import {
+  assets,
+  caseStudies,
+  currentLanguage,
+  megaMenu,
+  nav,
+  pages,
+  performance,
+  products,
+  supportedLanguages,
+  ui,
+  why
+} from "./data.js";
 
 const iconPaths = {
   arrow: '<path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>',
@@ -54,7 +66,7 @@ function machineVisual(type) {
 function productCard(product) {
   return `
     <article id="${product.id}" class="product-card reveal tilt-card">
-      <a href="${product.href}" aria-label="Explore ${product.title}">
+      <a href="${product.href}" aria-label="${ui.detail.view}: ${product.title}">
         <div class="product-card__top">
           <span class="product-card__icon">${icon(product.icon)}</span>
           <span class="product-card__code">CUTRON</span>
@@ -95,16 +107,34 @@ export function renderHeader(currentPage) {
         <nav class="desktop-nav" aria-label="Primary navigation">
           ${links}
         </nav>
-        <a class="nav-cta" href="contact.html">Request Offer</a>
+        ${renderLanguageSwitcher()}
+        <a class="nav-cta" href="contact.html">${ui.navCta}</a>
         <button class="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-mobile-toggle>
           ${icon("menu")}
         </button>
       </div>
       <div class="mobile-panel" data-mobile-panel>
         ${nav.map((item) => `<a href="${item.href}">${item.label}</a>`).join("")}
-        <a class="mobile-panel__cta" href="contact.html">Request Technical Offer</a>
+        ${renderLanguageSwitcher("language-switcher--mobile")}
+        <a class="mobile-panel__cta" href="contact.html">${ui.mobileCta}</a>
       </div>
     </header>
+  `;
+}
+
+function renderLanguageSwitcher(extraClass = "") {
+  return `
+    <label class="language-switcher ${extraClass}" aria-label="${ui.languageLabel}">
+      <span>${ui.languageLabel}</span>
+      <select data-language-switcher>
+        ${supportedLanguages
+          .map(
+            (language) =>
+              `<option value="${language.code}" ${language.code === currentLanguage ? "selected" : ""}>${language.label}</option>`
+          )
+          .join("")}
+      </select>
+    </label>
   `;
 }
 
@@ -134,7 +164,7 @@ function renderMegaMenu() {
         <div class="mega-feature">
           <img src="${assets.mark}" alt="" />
           <strong>Driven by Precision</strong>
-          <small>Premium sheet metal technology powered by UZINEX.</small>
+          <small>${ui.footer.text}</small>
         </div>
       </div>
     </div>
@@ -162,20 +192,20 @@ export function renderFooter() {
       <div class="footer-main">
         <div>
           <img class="footer-logo" src="${assets.logoDark}" alt="CUTRON" />
-          <p>Premium sheet metal systems for modern manufacturing. Powered by UZINEX.</p>
+          <p>${ui.footer.text}</p>
         </div>
         <div class="footer-links">
-          <a href="products.html">Products</a>
-          <a href="laser-cutting.html">Laser Cutting</a>
-          <a href="press-brake.html">Press Brake</a>
-          <a href="automation.html">Automation</a>
-          <a href="service-support.html">Service & Support</a>
-          <a href="contact.html">Contact</a>
+          <a href="products.html">${ui.footer.links[0]}</a>
+          <a href="laser-cutting.html">${ui.footer.links[1]}</a>
+          <a href="press-brake.html">${ui.footer.links[2]}</a>
+          <a href="automation.html">${ui.footer.links[3]}</a>
+          <a href="service-support.html">${ui.footer.links[4]}</a>
+          <a href="contact.html">${ui.footer.links[5]}</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>CUTRON - Driven by Precision</span>
-        <span>Luxury industrial technology by UZINEX</span>
+        <span>${ui.footer.bottom[0]}</span>
+        <span>${ui.footer.bottom[1]}</span>
       </div>
     </footer>
   `;
@@ -197,24 +227,21 @@ export function renderHome() {
 function renderHero() {
   return `
     <section class="hero" id="top">
-      <img class="hero__image" src="${assets.hero}" alt="Premium industrial automation cell with laser cutting and robotic systems" />
+      <img class="hero__image" src="${assets.hero}" alt="CUTRON" />
       <div class="hero__shade"></div>
       <div class="hero__metal-line"></div>
       <div class="hero__content reveal">
         <img class="hero__logo" src="${assets.logoDark}" alt="CUTRON Driven by Precision" />
-        <span class="hero__kicker">Premium industrial division powered by UZINEX</span>
-        <h1>ENGINEERED FOR PRECISION</h1>
-        <p>Premium sheet metal systems for modern manufacturing.</p>
+        <span class="hero__kicker">${ui.hero.kicker}</span>
+        <h1>${ui.hero.h1}</h1>
+        <p>${ui.hero.text}</p>
         <div class="hero__actions">
-          ${button("contact.html", "Request Technical Offer", "primary", "arrow")}
-          ${button("products.html", "Explore Systems", "secondary", "factory")}
+          ${button("contact.html", ui.hero.primary, "primary", "arrow")}
+          ${button("products.html", ui.hero.secondary, "secondary", "factory")}
         </div>
       </div>
       <div class="hero__signal reveal">
-        <span>Fiber laser</span>
-        <span>Press brake</span>
-        <span>Robotic cells</span>
-        <span>Smart factory</span>
+        ${ui.hero.signals.map((signal) => `<span>${signal}</span>`).join("")}
       </div>
     </section>
   `;
@@ -225,13 +252,11 @@ function renderBrandSection() {
     <section class="section section--titanium" id="brand">
       <div class="section-grid section-grid--brand">
         <div class="brand-copy reveal">
-          <span class="section-label">CUTRON by UZINEX</span>
-          <h2>Industrial performance refined.</h2>
-          <p>CUTRON is the premium industrial automation and sheet metal processing division powered by the UZINEX ecosystem. The brand is built around precise configuration, accountable support and modern production architecture.</p>
+          <span class="section-label">${ui.brand.label}</span>
+          <h2>${ui.brand.title}</h2>
+          <p>${ui.brand.text}</p>
           <div class="brand-claims">
-            <span>Polished steel discipline</span>
-            <span>Restrained gold precision</span>
-            <span>Enterprise manufacturing logic</span>
+            ${ui.brand.claims.map((claim) => `<span>${claim}</span>`).join("")}
           </div>
         </div>
         <div class="brand-visual reveal">
@@ -249,9 +274,9 @@ function renderProductEcosystem() {
   return `
     <section class="section section--black" id="systems">
       ${sectionIntro(
-        "Product ecosystem",
-        "Premium sheet metal technology.",
-        "From standalone machines to complete production ecosystems, CUTRON systems are configured around output, material flow and long-term service."
+        ui.sectionProduct.label,
+        ui.sectionProduct.title,
+        ui.sectionProduct.text
       )}
       <div class="product-grid">
         ${products.map(productCard).join("")}
@@ -261,20 +286,20 @@ function renderProductEcosystem() {
 }
 
 function renderSmartFactory() {
-  const flow = ["CAD/CAM", "Storage", "Laser cutting", "Bending", "Welding", "Inspection", "Dispatch"];
+  const flow = ui.smartFactory.flow;
   return `
     <section class="section section--split" id="smart-factory">
       <div class="split-media reveal">
         <img src="${assets.smartFactory}" alt="Connected smart factory sheet metal automation system" loading="lazy" />
       </div>
       <div class="split-copy reveal">
-        <span class="section-label">Smart factory integration</span>
-        <h2>Automation that respects the whole factory.</h2>
-        <p>CUTRON connects machines, robotic cells, storage towers and digital routing into a single production logic. The goal is not more equipment. The goal is a cleaner, faster, measurable workflow.</p>
+        <span class="section-label">${ui.smartFactory.label}</span>
+        <h2>${ui.smartFactory.title}</h2>
+        <p>${ui.smartFactory.text}</p>
         <div class="flow-line">
           ${flow.map((item) => `<span>${item}</span>`).join("")}
         </div>
-        ${button("smart-factory.html", "Explore Smart Factory", "secondary", "network")}
+        ${button("smart-factory.html", ui.smartFactory.cta, "secondary", "network")}
       </div>
     </section>
   `;
@@ -284,9 +309,9 @@ function renderPerformance() {
   return `
     <section class="section section--metrics">
       ${sectionIntro(
-        "Performance",
-        "Built for serious production environments.",
-        "CUTRON communicates through measurable capability: power, automation, support, training and configured industrial efficiency."
+        ui.performanceSection.label,
+        ui.performanceSection.title,
+        ui.performanceSection.text
       )}
       <div class="metric-grid">
         ${performance
@@ -308,9 +333,9 @@ function renderWhy() {
   return `
     <section class="section section--why">
       ${sectionIntro(
-        "Why CUTRON",
-        "Engineering authority with service continuity.",
-        "Premium machinery only matters when it is correctly configured, installed, trained and supported."
+        ui.whySection.label,
+        ui.whySection.title,
+        ui.whySection.text
       )}
       <div class="why-list">
         ${why
@@ -335,9 +360,9 @@ function renderCaseStudies() {
   return `
     <section class="section section--black" id="case-studies">
       ${sectionIntro(
-        "Industrial projects",
-        "Cinematic systems. Practical outcomes.",
-        "CUTRON case studies are presented as production architectures: cutting, bending, welding and automation working together."
+        ui.caseSection.label,
+        ui.caseSection.title,
+        ui.caseSection.text
       )}
       <div class="case-grid">
         ${caseStudies
@@ -364,10 +389,10 @@ function renderFinalCta() {
     <section class="final-cta">
       <img src="${assets.mark}" alt="" />
       <div class="reveal">
-        <span class="section-label">Driven by Precision</span>
-        <h2>Build your next production system with CUTRON.</h2>
-        <p>Request a technical configuration for laser CNC, press brake, robotic automation or a complete sheet metal ecosystem.</p>
-        ${button("contact.html", "Request Technical Offer", "primary", "arrow")}
+        <span class="section-label">${ui.finalCta.label}</span>
+        <h2>${ui.finalCta.title}</h2>
+        <p>${ui.finalCta.text}</p>
+        ${button("contact.html", ui.hero.primary, "primary", "arrow")}
       </div>
     </section>
   `;
@@ -378,7 +403,7 @@ export function renderProductsPage() {
   return `
     ${renderPageHero(page)}
     <section class="section section--black">
-      ${sectionIntro("Systems", "One premium portfolio, multiple production paths.", "Select a standalone machine, a connected cell or a complete factory architecture. CUTRON keeps the visual discipline premium and the technical logic practical.")}
+      ${sectionIntro(ui.productsPage.label, ui.productsPage.title, ui.productsPage.text)}
       <div class="product-grid">
         ${products.map(productCard).join("")}
       </div>
@@ -389,14 +414,14 @@ export function renderProductsPage() {
 }
 
 function renderSystemArchitecture() {
-  const steps = ["Need analysis", "System configuration", "Layout planning", "Installation", "Training", "Lifecycle support"];
+  const steps = ui.architecture.steps;
   return `
     <section class="section section--titanium">
       <div class="architecture">
         <div class="architecture__copy reveal">
-          <span class="section-label">Configuration logic</span>
-          <h2>Production ecosystems, not isolated machines.</h2>
-          <p>CUTRON is built for manufacturers who need precise recommendations, clean integration and technical support after the offer is signed.</p>
+          <span class="section-label">${ui.architecture.label}</span>
+          <h2>${ui.architecture.title}</h2>
+          <p>${ui.architecture.text}</p>
         </div>
         <div class="architecture__flow reveal">
           ${steps.map((step, index) => `<span><strong>${index + 1}</strong>${step}</span>`).join("")}
@@ -427,8 +452,8 @@ function renderPageHero(page) {
         <h1>${page.title}</h1>
         <p>${page.intro}</p>
         <div class="page-hero__actions">
-          ${button("contact.html", "Request Technical Offer", "primary", "arrow")}
-          ${button("products.html", "View Systems", "secondary", "factory")}
+          ${button("contact.html", ui.detail.request, "primary", "arrow")}
+          ${button("products.html", ui.detail.view, "secondary", "factory")}
         </div>
       </div>
     </section>
@@ -438,7 +463,7 @@ function renderPageHero(page) {
 function renderPillars(page) {
   return `
     <section class="section section--black">
-      ${sectionIntro("Capability", "Precision-built around the production target.", "Every CUTRON configuration is evaluated through output, material, workflow and long-term service expectations.")}
+      ${sectionIntro(ui.detail.capabilityLabel, ui.detail.capabilityTitle, ui.detail.capabilityText)}
       <div class="pillar-grid">
         ${page.pillars
           .map(
@@ -461,8 +486,8 @@ function renderTechMatrix(page) {
     <section class="section section--titanium">
       <div class="matrix-shell reveal">
         <div>
-          <span class="section-label">Technical view</span>
-          <h2>Configured for real factory conditions.</h2>
+          <span class="section-label">${ui.detail.technicalLabel}</span>
+          <h2>${ui.detail.technicalTitle}</h2>
         </div>
         <div class="tech-matrix">
           ${page.matrix
@@ -482,13 +507,13 @@ function renderTechMatrix(page) {
 }
 
 function renderProcessSection(page) {
-  const processes = ["Discovery", "Technical offer", "Factory layout", "Commissioning", "Training", "Support"];
+  const processes = ui.detail.processes;
   return `
     <section class="section section--process">
       <div class="process-copy reveal">
-        <span class="section-label">Method</span>
-        <h2>From technical offer to production ramp-up.</h2>
-        <p>${page.title} projects are handled as engineering conversations: short, precise and grounded in the production result.</p>
+        <span class="section-label">${ui.detail.methodLabel}</span>
+        <h2>${ui.detail.methodTitle}</h2>
+        <p>${ui.detail.methodText(page.title)}</p>
       </div>
       <div class="process-track reveal">
         ${processes.map((item) => `<span>${item}</span>`).join("")}
@@ -500,57 +525,49 @@ function renderProcessSection(page) {
 export function renderContactPage() {
   return `
     <section class="page-hero page-hero--contact">
-      <img class="page-hero__image" src="${assets.hero}" alt="CUTRON contact and technical offer" />
+      <img class="page-hero__image" src="${assets.hero}" alt="CUTRON" />
       <div class="page-hero__shade"></div>
       <div class="page-hero__content reveal">
-        <span class="section-label">Technical offer</span>
-        <h1>Request a CUTRON configuration.</h1>
-        <p>Tell us what you manufacture, what material you process and what production system you want to build next.</p>
+        <span class="section-label">${ui.contact.label}</span>
+        <h1>${ui.contact.title}</h1>
+        <p>${ui.contact.text}</p>
       </div>
     </section>
     <section class="section section--contact">
       <div class="contact-shell">
         <form class="contact-form reveal" data-contact-form>
           <label>
-            <span>Name</span>
+            <span>${ui.contact.fields[0]}</span>
             <input name="name" type="text" autocomplete="name" required />
           </label>
           <label>
-            <span>Email</span>
+            <span>${ui.contact.fields[1]}</span>
             <input name="email" type="email" autocomplete="email" required />
           </label>
           <label>
-            <span>Company</span>
+            <span>${ui.contact.fields[2]}</span>
             <input name="company" type="text" autocomplete="organization" />
           </label>
           <label>
-            <span>System interest</span>
+            <span>${ui.contact.fields[3]}</span>
             <select name="system">
-              <option>Fiber Laser Systems</option>
-              <option>Press Brake Systems</option>
-              <option>Automation & Robotic Cells</option>
-              <option>Smart Factory Integration</option>
-              <option>Complete production ecosystem</option>
+              ${ui.contact.options.map((option) => `<option>${option}</option>`).join("")}
             </select>
           </label>
           <label class="contact-form__wide">
-            <span>Project details</span>
-            <textarea name="message" rows="6" placeholder="Material, thickness range, production volume, automation goals"></textarea>
+            <span>${ui.contact.fields[4]}</span>
+            <textarea name="message" rows="6" placeholder="${ui.contact.placeholder}"></textarea>
           </label>
           <button class="button button--primary contact-form__wide" type="submit">
-            <span>Prepare Technical Request</span>${icon("arrow")}
+            <span>${ui.contact.submit}</span>${icon("arrow")}
           </button>
           <p class="form-status" data-form-status></p>
         </form>
         <aside class="contact-aside reveal">
           <img src="${assets.mark}" alt="" />
-          <h2>What helps us configure precisely</h2>
+          <h2>${ui.contact.asideTitle}</h2>
           <ul>
-            <li>${icon("check")} Material type and thickness range</li>
-            <li>${icon("check")} Part examples or production families</li>
-            <li>${icon("check")} Required throughput and shifts</li>
-            <li>${icon("check")} Available floor space</li>
-            <li>${icon("check")} Automation targets</li>
+            ${ui.contact.checklist.map((item) => `<li>${icon("check")} ${item}</li>`).join("")}
           </ul>
           <div class="contact-lines">
             <a href="mailto:office@uzinex.ro">${icon("mail")} office@uzinex.ro</a>
@@ -569,9 +586,9 @@ export function renderNotFound() {
       <div class="page-hero__shade"></div>
       <div class="page-hero__content reveal">
         <span class="section-label">CUTRON</span>
-        <h1>Page not found.</h1>
-        <p>The requested section is not available.</p>
-        ${button("index.html", "Return Home", "primary", "arrow")}
+        <h1>${ui.notFound[0]}</h1>
+        <p>${ui.notFound[1]}</p>
+        ${button("index.html", ui.notFound[2], "primary", "arrow")}
       </div>
     </section>
   `;

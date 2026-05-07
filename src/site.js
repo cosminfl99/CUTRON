@@ -7,9 +7,14 @@ import {
   renderNotFound,
   renderProductsPage
 } from "./components.js";
+import { setLanguage, ui, updateDocumentMeta } from "./data.js";
+import { detectInitialLanguage } from "./i18n.js";
 
 const pageKey = document.body.dataset.page || "home";
 const app = document.querySelector("#app");
+
+setLanguage(detectInitialLanguage());
+updateDocumentMeta(pageKey);
 
 const pageRenderers = {
   home: renderHome,
@@ -40,6 +45,7 @@ initReveals();
 initTiltCards();
 initContactForm();
 initSmoothAnchors();
+initLanguageSwitchers();
 
 function initHeader() {
   const header = document.querySelector("[data-header]");
@@ -129,13 +135,25 @@ function initContactForm() {
     const email = formData.get("email") || "";
     const system = formData.get("system") || "";
     const message = formData.get("message") || "";
-    const subject = encodeURIComponent(`CUTRON technical request - ${system}`);
+    const subject = encodeURIComponent(`${ui.contact.mailSubject} - ${system}`);
     const body = encodeURIComponent(
-      `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nSystem: ${system}\n\nProject details:\n${message}`
+      `${ui.contact.fields[0]}: ${name}\n${ui.contact.fields[2]}: ${company}\n${ui.contact.fields[1]}: ${email}\n${ui.contact.fields[3]}: ${system}\n\n${ui.contact.fields[4]}:\n${message}`
     );
 
-    status.textContent = "Your technical request has been prepared in your email client.";
+    status.textContent = ui.contact.status;
     window.location.href = `mailto:office@uzinex.ro?subject=${subject}&body=${body}`;
+  });
+}
+
+function initLanguageSwitchers() {
+  document.querySelectorAll("[data-language-switcher]").forEach((select) => {
+    select.addEventListener("change", () => {
+      const language = select.value;
+      localStorage.setItem("cutron-language", language);
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", language);
+      window.location.href = url.toString();
+    });
   });
 }
 

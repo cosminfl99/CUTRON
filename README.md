@@ -17,6 +17,7 @@ Website multipage pentru CUTRON, parte din ecosistemul UZINEX.
 ## Structura
 
 - `src/data.js` - continut, pagini, produse, metrici si case studies
+- `src/i18n.js` - detectie limba, mapare country/timezone si traduceri RO/EN/DE/PL/BG
 - `src/components.js` - componente UI randate modular
 - `src/site.js` - initializare pagina, animatii, meniu mobil, formular
 - `src/styles.css` - design system luxury industrial
