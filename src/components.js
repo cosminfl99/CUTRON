@@ -210,11 +210,14 @@ export function renderFooter() {
 export function renderHome() {
   return `
     ${renderHero()}
-    ${renderHarsleExpertise()}
-    ${renderHarsleProducts()}
-    ${renderHarsleWhy()}
-    ${renderHarsleContentBlocks()}
-    ${renderHarsleService()}
+    ${renderEngineeringAuthority()}
+    ${renderExpertiseSection()}
+    ${renderTechnologyPlatform()}
+    ${renderCatalogProducts()}
+    ${renderWhyCutron()}
+    ${renderGlobalReach()}
+    ${renderContentBlocks()}
+    ${renderTechnicalService()}
     ${renderCaseStudies()}
     ${renderFinalCta()}
   `;
@@ -238,17 +241,45 @@ function renderHero() {
         </div>
       </div>
       <div class="hero__signal reveal">
-        ${s.products.slice(0, 4).map((product) => `<span>${product.title}</span>`).join("")}
+        ${(s.heroSignal || s.products.slice(0, 4).map((product) => product.title)).map((item) => `<span>${item}</span>`).join("")}
       </div>
     </section>
   `;
 }
 
-function renderHarsleExpertise() {
+function renderEngineeringAuthority() {
   const s = getStructure();
   return `
-    <section class="section harsle-band" id="company">
-      <div class="harsle-expertise">
+    <section class="section authority-section" id="engineering">
+      <div class="authority-layout">
+        <div class="authority-copy reveal">
+          <span class="section-label">${s.authority[0]}</span>
+          <h2>${s.authority[1]}</h2>
+          <p>${s.authority[2]}</p>
+        </div>
+        <div class="authority-proof-grid">
+          ${s.authority[3]
+            .map(
+              ([title, text], index) => `
+                <article class="authority-proof reveal">
+                  <span>${String(index + 1).padStart(2, "0")}</span>
+                  <h3>${title}</h3>
+                  <p>${text}</p>
+                </article>
+              `
+            )
+            .join("")}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderExpertiseSection() {
+  const s = getStructure();
+  return `
+    <section class="section expertise-band" id="company">
+      <div class="expertise-layout">
         <div class="brand-copy reveal">
           <span class="section-label">${s.expertise[0]}</span>
           <h2>${s.expertise[1]}</h2>
@@ -259,7 +290,7 @@ function renderHarsleExpertise() {
             <span>Premium manufacturing authority</span>
           </div>
         </div>
-        <div class="harsle-stats reveal">
+        <div class="expertise-stats reveal">
           ${s.stats
             .map(([value, label]) => `<article><strong>${value}</strong><span>${label}</span></article>`)
             .join("")}
@@ -269,7 +300,7 @@ function renderHarsleExpertise() {
   `;
 }
 
-function renderHarsleProducts() {
+function renderCatalogProducts() {
   const s = getStructure();
   return `
     <section class="section section--black" id="products">
@@ -284,10 +315,47 @@ function renderHarsleProducts() {
   `;
 }
 
-function renderHarsleWhy() {
+function renderTechnologyPlatform() {
   const s = getStructure();
   return `
-    <section class="section section--split harsle-why">
+    <section class="section section--titanium technology-section" id="technology">
+      <div class="technology-layout">
+        <div class="technology-map reveal">
+          <div class="technology-map__core">
+            <span>CUTRON</span>
+            <strong>4.0</strong>
+          </div>
+          <span class="technology-map__node technology-map__node--one">CNC</span>
+          <span class="technology-map__node technology-map__node--two">Automation</span>
+          <span class="technology-map__node technology-map__node--three">Nesting</span>
+          <span class="technology-map__node technology-map__node--four">Service</span>
+        </div>
+        <div class="technology-copy reveal">
+          <span class="section-label">${s.technology[0]}</span>
+          <h2>${s.technology[1]}</h2>
+          <p>${s.technology[2]}</p>
+          <div class="technology-list">
+            ${s.technology[3]
+              .map(
+                ([title, text]) => `
+                  <article>
+                    <h3>${title}</h3>
+                    <p>${text}</p>
+                  </article>
+                `
+              )
+              .join("")}
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderWhyCutron() {
+  const s = getStructure();
+  return `
+    <section class="section section--split cutron-why">
       <div class="split-media reveal">
         <img src="${assets.smartFactory}" alt="CUTRON premium factory automation" loading="lazy" />
       </div>
@@ -303,7 +371,34 @@ function renderHarsleWhy() {
   `;
 }
 
-function renderHarsleContentBlocks() {
+function renderGlobalReach() {
+  const s = getStructure();
+  return `
+    <section class="section reach-section">
+      <div class="reach-layout">
+        <div class="reach-copy reveal">
+          <span class="section-label">${s.reach[0]}</span>
+          <h2>${s.reach[1]}</h2>
+          <p>${s.reach[2]}</p>
+        </div>
+        <div class="reach-grid">
+          ${s.reach[3]
+            .map(
+              ([country, text]) => `
+                <article class="reach-card reveal">
+                  <strong>${country}</strong>
+                  <p>${text}</p>
+                </article>
+              `
+            )
+            .join("")}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderContentBlocks() {
   const s = getStructure();
   const hrefs = ["company.html", "showcase.html", "support.html", "company.html"];
   return `
@@ -326,7 +421,7 @@ function renderHarsleContentBlocks() {
   `;
 }
 
-function renderHarsleService() {
+function renderTechnicalService() {
   const s = getStructure();
   return `
     <section class="section section--metrics">
@@ -566,8 +661,8 @@ export function renderCompanyPage() {
   const s = getStructure();
   return `
     ${renderCatalogHero(s.expertise[1], s.expertise[2], assets.hero)}
-    ${renderHarsleExpertise()}
-    ${renderHarsleWhy()}
+    ${renderExpertiseSection()}
+    ${renderWhyCutron()}
     ${renderFinalCta()}
   `;
 }
@@ -576,7 +671,7 @@ export function renderSupportPage() {
   const s = getStructure();
   return `
     ${renderCatalogHero(s.service[1], s.expertise[2], assets.smartFactory)}
-    ${renderHarsleService()}
+    ${renderTechnicalService()}
     ${renderSystemArchitecture()}
     ${renderFinalCta()}
   `;
@@ -587,7 +682,7 @@ export function renderShowcasePage() {
   return `
     ${renderCatalogHero(s.contentBlocks[1][1], s.contentBlocks[1][2], assets.ecosystem)}
     ${renderCaseStudies()}
-    ${renderHarsleProducts()}
+    ${renderCatalogProducts()}
     ${renderFinalCta()}
   `;
 }
@@ -618,7 +713,7 @@ export function renderCategoryDetail(pageKey) {
     ${renderPageHero(page)}
     ${renderPillars(page)}
     ${renderTechMatrix(page)}
-    ${renderHarsleService()}
+    ${renderTechnicalService()}
     ${renderFinalCta()}
   `;
 }

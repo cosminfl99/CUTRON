@@ -892,11 +892,258 @@ select {
   font-size: 13px;
 }
 
-.harsle-band {
+.expertise-band {
   background: linear-gradient(180deg, #111214, #080808);
 }
 
-.harsle-expertise {
+.authority-section {
+  background:
+    linear-gradient(180deg, #090909, #131416),
+    linear-gradient(90deg, rgba(0, 92, 168, 0.05), transparent, rgba(200, 164, 93, 0.04));
+}
+
+.authority-layout,
+.technology-layout,
+.reach-layout {
+  width: min(100%, var(--section-max));
+  margin: 0 auto;
+}
+
+.authority-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: 62px;
+  align-items: start;
+}
+
+.authority-copy {
+  position: sticky;
+  top: calc(var(--header-height) + 34px);
+}
+
+.authority-copy h2,
+.technology-copy h2,
+.reach-copy h2 {
+  margin: 12px 0 0;
+  color: var(--chrome);
+  font-size: 48px;
+  line-height: 1.04;
+  font-weight: 720;
+}
+
+.authority-copy p,
+.technology-copy > p,
+.reach-copy p {
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.62;
+}
+
+.authority-proof-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.authority-proof {
+  min-height: 174px;
+  padding: 28px;
+  border: 1px solid rgba(229, 231, 234, 0.14);
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 14px 22px;
+  background:
+    linear-gradient(145deg, rgba(42, 45, 49, 0.74), rgba(10, 10, 10, 0.92)),
+    linear-gradient(90deg, rgba(200, 164, 93, 0.07), transparent);
+}
+
+.authority-proof > span {
+  grid-row: span 2;
+  color: rgba(200, 164, 93, 0.76);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.authority-proof h3,
+.technology-list h3 {
+  margin: 0;
+  color: var(--chrome);
+  font-size: 22px;
+  line-height: 1.18;
+}
+
+.authority-proof p,
+.technology-list p,
+.reach-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.56;
+}
+
+.technology-section {
+  overflow: hidden;
+}
+
+.technology-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.86fr) minmax(0, 1.14fr);
+  gap: 70px;
+  align-items: center;
+}
+
+.technology-map {
+  position: relative;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+}
+
+.technology-map::before,
+.technology-map::after {
+  position: absolute;
+  content: "";
+  border-radius: 999px;
+}
+
+.technology-map::before {
+  width: 430px;
+  height: 430px;
+  border: 1px solid rgba(201, 206, 211, 0.18);
+  background:
+    radial-gradient(circle, rgba(200, 164, 93, 0.1), transparent 36%),
+    repeating-linear-gradient(90deg, rgba(229, 231, 234, 0.08) 0 1px, transparent 1px 36px);
+}
+
+.technology-map::after {
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(200, 164, 93, 0.28);
+  box-shadow: 0 0 74px rgba(0, 92, 168, 0.16);
+}
+
+.technology-map__core {
+  position: relative;
+  z-index: 2;
+  width: 178px;
+  height: 178px;
+  border: 1px solid rgba(201, 206, 211, 0.28);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  background:
+    linear-gradient(145deg, rgba(229, 231, 234, 0.18), rgba(10, 10, 10, 0.92)),
+    radial-gradient(circle at 50% 22%, rgba(200, 164, 93, 0.2), transparent 42%);
+}
+
+.technology-map__core span {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.technology-map__core strong {
+  color: #fff;
+  font-size: 54px;
+  line-height: 1;
+}
+
+.technology-map__node {
+  position: absolute;
+  z-index: 3;
+  min-width: 118px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid rgba(229, 231, 234, 0.2);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--chrome);
+  background: rgba(5, 5, 5, 0.76);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.technology-map__node--one {
+  top: 90px;
+  left: 18%;
+}
+
+.technology-map__node--two {
+  top: 170px;
+  right: 4%;
+}
+
+.technology-map__node--three {
+  left: 6%;
+  bottom: 148px;
+}
+
+.technology-map__node--four {
+  right: 18%;
+  bottom: 82px;
+}
+
+.technology-list {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.technology-list article {
+  min-height: 174px;
+  padding: 24px;
+  border: 1px solid rgba(229, 231, 234, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.technology-list p {
+  margin-top: 12px;
+}
+
+.reach-section {
+  background:
+    linear-gradient(180deg, #111214, #080808),
+    linear-gradient(90deg, rgba(200, 164, 93, 0.05), transparent, rgba(0, 92, 168, 0.06));
+}
+
+.reach-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  gap: 60px;
+  align-items: center;
+}
+
+.reach-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.reach-card {
+  min-height: 176px;
+  padding: 26px;
+  border: 1px solid rgba(229, 231, 234, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(42, 45, 49, 0.7), rgba(10, 10, 10, 0.92)),
+    linear-gradient(90deg, rgba(0, 92, 168, 0.08), transparent);
+}
+
+.reach-card strong {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--gold);
+  font-size: 18px;
+}
+
+.expertise-layout {
   width: min(100%, var(--section-max));
   margin: 0 auto;
   display: grid;
@@ -905,13 +1152,13 @@ select {
   align-items: center;
 }
 
-.harsle-stats {
+.expertise-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
-.harsle-stats article,
+.expertise-stats article,
 .service-card,
 .content-block {
   border: 1px solid rgba(229, 231, 234, 0.14);
@@ -919,20 +1166,20 @@ select {
   background: linear-gradient(145deg, rgba(42, 45, 49, 0.72), rgba(10, 10, 10, 0.92));
 }
 
-.harsle-stats article {
+.expertise-stats article {
   min-height: 150px;
   padding: 28px;
   display: grid;
   align-content: end;
 }
 
-.harsle-stats strong {
+.expertise-stats strong {
   color: var(--chrome);
   font-size: 54px;
   line-height: 1;
 }
 
-.harsle-stats span {
+.expertise-stats span {
   margin-top: 10px;
   color: var(--gold);
   font-size: 14px;
@@ -1746,7 +1993,9 @@ select {
   .pillar-grid,
   .product-grid--catalog,
   .content-block-grid,
-  .service-grid {
+  .service-grid,
+  .technology-list,
+  .reach-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1755,8 +2004,15 @@ select {
   .architecture,
   .matrix-shell,
   .contact-shell,
-  .harsle-expertise {
+  .expertise-layout,
+  .authority-layout,
+  .technology-layout,
+  .reach-layout {
     grid-template-columns: 1fr;
+  }
+
+  .authority-copy {
+    position: static;
   }
 
   .split-media {
@@ -1845,7 +2101,10 @@ select {
   .brand-copy p,
   .final-cta p,
   .process-copy p,
-  .architecture__copy p {
+  .architecture__copy p,
+  .authority-copy p,
+  .technology-copy > p,
+  .reach-copy p {
     font-size: 17px;
   }
 
@@ -1875,7 +2134,10 @@ select {
   .split-copy h2,
   .architecture__copy h2,
   .matrix-shell h2,
-  .process-copy h2 {
+  .process-copy h2,
+  .authority-copy h2,
+  .technology-copy h2,
+  .reach-copy h2 {
     font-size: 34px;
     line-height: 1.08;
   }
@@ -1891,8 +2153,59 @@ select {
   .product-grid--catalog,
   .content-block-grid,
   .service-grid,
-  .harsle-stats {
+  .expertise-stats,
+  .technology-list,
+  .reach-grid {
     grid-template-columns: 1fr;
+  }
+
+  .authority-proof {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+
+  .authority-proof > span {
+    grid-row: auto;
+  }
+
+  .technology-map {
+    min-height: 390px;
+  }
+
+  .technology-map::before {
+    width: 310px;
+    height: 310px;
+  }
+
+  .technology-map::after {
+    width: 224px;
+    height: 224px;
+  }
+
+  .technology-map__core {
+    width: 136px;
+    height: 136px;
+  }
+
+  .technology-map__core strong {
+    font-size: 42px;
+  }
+
+  .technology-map__node {
+    min-width: 96px;
+    min-height: 38px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .technology-map__node--one,
+  .technology-map__node--three {
+    left: 0;
+  }
+
+  .technology-map__node--two,
+  .technology-map__node--four {
+    right: 0;
   }
 
   .product-card,
