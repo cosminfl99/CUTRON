@@ -1,0 +1,19 @@
+{
+  "name": "cutron-premium-industrial-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Premium industrial website for CUTRON, powered by UZINEX.",
+  "scripts": {
+    "serve": "python -m http.server 4173"
+  },
+  "keywords": [
+    "CUTRON",
+    "sheet metal",
+    "laser cutting",
+    "press brake",
+    "automation",
+    "smart factory"
+  ],
+  "author": "CUTRON",
+  "license": "UNLICENSED"
+}
