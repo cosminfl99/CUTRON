@@ -4,6 +4,7 @@
   "private": true,
   "description": "Premium industrial website for CUTRON, powered by UZINEX.",
   "scripts": {
+    "build": "node scripts/build.mjs",
     "serve": "python -m http.server 4173"
   },
   "keywords": [
