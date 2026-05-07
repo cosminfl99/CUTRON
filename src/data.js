@@ -4,6 +4,7 @@ export const assets = {
   logoDark: "public/assets/cutron-logo-dark.webp",
   logoLight: "public/assets/cutron-logo-light.webp",
   mark: "public/assets/cutron-mark.webp",
+  goldMark: "public/assets/cutron-gold-mark.webp",
   hero: "public/assets/hero-industrial.webp",
   ecosystem: "public/assets/ecosystem-line.webp",
   smartFactory: "public/assets/smart-factory.webp"
@@ -21,17 +22,15 @@ export let why = [];
 export let caseStudies = [];
 export let pages = {};
 
-const navHrefs = [
-  "index.html",
-  "products.html",
-  "laser-cutting.html",
-  "press-brake.html",
-  "automation.html",
-  "smart-factory.html",
-  "service-support.html",
-  "about.html",
-  "contact.html"
-];
+const layoutNav = {
+  en: ["Home", "Company", "Products", "Support", "Showcase", "Contact"],
+  ro: ["Acasa", "Companie", "Produse", "Suport", "Showcase", "Contact"],
+  de: ["Home", "Unternehmen", "Produkte", "Support", "Showcase", "Kontakt"],
+  pl: ["Start", "Firma", "Produkty", "Wsparcie", "Showcase", "Kontakt"],
+  bg: ["Начало", "Компания", "Продукти", "Поддръжка", "Showcase", "Контакт"]
+};
+
+const navHrefs = ["index.html", "company.html", "products.html", "support.html", "showcase.html", "contact.html"];
 
 const productMeta = [
   { id: "fiber-laser", href: "laser-cutting.html", icon: "laser", visual: "laser" },
@@ -59,10 +58,10 @@ export function setLanguage(language) {
   currentLanguage = code;
   ui = translations[code] || translations[DEFAULT_LANGUAGE];
 
-  nav = ui.nav.map((label, index) => ({
+  nav = (layoutNav[code] || layoutNav.en).map((label, index) => ({
     label,
     href: navHrefs[index],
-    mega: index === 1
+    mega: index === 2
   }));
 
   megaMenu = ui.megaMenu;

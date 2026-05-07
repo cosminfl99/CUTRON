@@ -11,6 +11,7 @@ import {
   ui,
   why
 } from "./data.js";
+import { getStructure } from "./structure.js";
 
 const iconPaths = {
   arrow: '<path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>',
@@ -85,6 +86,7 @@ function productCard(product) {
 }
 
 export function renderHeader(currentPage) {
+  const s = getStructure();
   const links = nav
     .map((item) => {
       const active = isActive(item.href, currentPage);
@@ -100,6 +102,12 @@ export function renderHeader(currentPage) {
 
   return `
     <header class="site-header" data-header>
+      <div class="top-strip">
+        <div>
+          ${s.top.map((item) => `<span>${item}</span>`).join("")}
+        </div>
+        <a href="contact.html">${s.quote}</a>
+      </div>
       <div class="nav-shell">
         <a class="brand" href="index.html" aria-label="CUTRON Home">
           <img src="${assets.logoDark}" alt="CUTRON Driven by Precision" />
@@ -139,30 +147,26 @@ function renderLanguageSwitcher(extraClass = "") {
 }
 
 function renderMegaMenu() {
+  const s = getStructure();
   return `
     <div class="mega-panel">
       <div class="mega-panel__inner">
-        ${megaMenu
-          .map(
-            (group) => `
-              <div class="mega-group">
-                <span>${group.title}</span>
-                ${group.items
-                  .map(
-                    ([title, text, href]) => `
-                      <a href="${href}">
-                        <strong>${title}</strong>
-                        <small>${text}</small>
-                      </a>
-                    `
-                  )
-                  .join("")}
-              </div>
-            `
-          )
-          .join("")}
+        <div class="mega-group mega-group--wide">
+          <span>${s.productIntro[0]}</span>
+          ${s.products
+            .slice(0, 4)
+            .map((product) => `<a href="${product.href}"><strong>${product.title}</strong><small>${product.text}</small></a>`)
+            .join("")}
+        </div>
+        <div class="mega-group mega-group--wide">
+          <span>Systems</span>
+          ${s.products
+            .slice(4)
+            .map((product) => `<a href="${product.href}"><strong>${product.title}</strong><small>${product.text}</small></a>`)
+            .join("")}
+        </div>
         <div class="mega-feature">
-          <img src="${assets.mark}" alt="" />
+          <img src="${assets.goldMark}" alt="" />
           <strong>Driven by Precision</strong>
           <small>${ui.footer.text}</small>
         </div>
@@ -214,17 +218,18 @@ export function renderFooter() {
 export function renderHome() {
   return `
     ${renderHero()}
-    ${renderBrandSection()}
-    ${renderProductEcosystem()}
-    ${renderSmartFactory()}
-    ${renderPerformance()}
-    ${renderWhy()}
+    ${renderHarsleExpertise()}
+    ${renderHarsleProducts()}
+    ${renderHarsleWhy()}
+    ${renderHarsleContentBlocks()}
+    ${renderHarsleService()}
     ${renderCaseStudies()}
     ${renderFinalCta()}
   `;
 }
 
 function renderHero() {
+  const s = getStructure();
   return `
     <section class="hero" id="top">
       <img class="hero__image" src="${assets.hero}" alt="CUTRON" />
@@ -232,16 +237,120 @@ function renderHero() {
       <div class="hero__metal-line"></div>
       <div class="hero__content reveal">
         <img class="hero__logo" src="${assets.logoDark}" alt="CUTRON Driven by Precision" />
-        <span class="hero__kicker">${ui.hero.kicker}</span>
-        <h1>${ui.hero.h1}</h1>
-        <p>${ui.hero.text}</p>
+        <span class="hero__kicker">CUTRON industrial systems</span>
+        <h1>${s.hero[0]}</h1>
+        <p>${s.hero[1]}</p>
         <div class="hero__actions">
-          ${button("contact.html", ui.hero.primary, "primary", "arrow")}
-          ${button("products.html", ui.hero.secondary, "secondary", "factory")}
+          ${button("products.html", s.hero[2], "primary", "factory")}
+          ${button("contact.html", s.hero[3], "secondary", "arrow")}
         </div>
       </div>
       <div class="hero__signal reveal">
-        ${ui.hero.signals.map((signal) => `<span>${signal}</span>`).join("")}
+        ${s.products.slice(0, 4).map((product) => `<span>${product.title}</span>`).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderHarsleExpertise() {
+  const s = getStructure();
+  return `
+    <section class="section harsle-band" id="company">
+      <div class="harsle-expertise">
+        <div class="brand-copy reveal">
+          <span class="section-label">${s.expertise[0]}</span>
+          <h2>${s.expertise[1]}</h2>
+          <p>${s.expertise[2]}</p>
+          <div class="brand-claims">
+            <span>Luxury industrial identity</span>
+            <span>European-style technical support</span>
+            <span>Premium manufacturing authority</span>
+          </div>
+        </div>
+        <div class="harsle-stats reveal">
+          ${s.stats
+            .map(([value, label]) => `<article><strong>${value}</strong><span>${label}</span></article>`)
+            .join("")}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderHarsleProducts() {
+  const s = getStructure();
+  return `
+    <section class="section section--black" id="products">
+      ${sectionIntro(s.productIntro[0], s.productIntro[1], s.productIntro[2])}
+      <div class="category-tabs reveal">
+        ${s.products.map((product) => `<a href="#${product.id}">${product.title}</a>`).join("")}
+      </div>
+      <div class="product-grid product-grid--catalog">
+        ${s.products.map(productCard).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderHarsleWhy() {
+  const s = getStructure();
+  return `
+    <section class="section section--split harsle-why">
+      <div class="split-media reveal">
+        <img src="${assets.smartFactory}" alt="CUTRON premium factory automation" loading="lazy" />
+      </div>
+      <div class="split-copy reveal">
+        <span class="section-label">${s.why[0]}</span>
+        <h2>${s.why[1]}</h2>
+        <div class="why-accordion">
+          ${s.why[2].map((item, index) => `<details ${index === 0 ? "open" : ""}><summary>${item}</summary><p>${ui.detail.capabilityText}</p></details>`).join("")}
+        </div>
+        ${button("support.html", nav[3]?.label || "Support", "secondary", "support")}
+      </div>
+    </section>
+  `;
+}
+
+function renderHarsleContentBlocks() {
+  const s = getStructure();
+  const hrefs = ["company.html", "showcase.html", "support.html", "company.html"];
+  return `
+    <section class="section section--titanium">
+      <div class="content-block-grid">
+        ${s.contentBlocks
+          .map(
+            ([label, title, text], index) => `
+              <a class="content-block reveal" href="${hrefs[index]}">
+                <span>${label}</span>
+                <h3>${title}</h3>
+                <p>${text}</p>
+                ${icon("arrow")}
+              </a>
+            `
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderHarsleService() {
+  const s = getStructure();
+  return `
+    <section class="section section--metrics">
+      ${sectionIntro(s.service[0], s.service[1], s.expertise[2])}
+      <div class="service-grid">
+        ${s.service[2]
+          .map(
+            ([title, text]) => `
+              <article class="service-card reveal">
+                <span>${icon("check")}</span>
+                <h3>${title}</h3>
+                <p>${text}</p>
+              </article>
+            `
+          )
+          .join("")}
       </div>
     </section>
   `;
@@ -399,17 +508,35 @@ function renderFinalCta() {
 }
 
 export function renderProductsPage() {
-  const page = pages.products;
+  const s = getStructure();
   return `
-    ${renderPageHero(page)}
+    ${renderCatalogHero(s.productIntro[1], s.productIntro[2], assets.ecosystem)}
     <section class="section section--black">
-      ${sectionIntro(ui.productsPage.label, ui.productsPage.title, ui.productsPage.text)}
+      ${sectionIntro(s.productIntro[0], s.productIntro[1], s.productIntro[2])}
       <div class="product-grid">
-        ${products.map(productCard).join("")}
+        ${s.products.map(productCard).join("")}
       </div>
     </section>
     ${renderSystemArchitecture()}
     ${renderFinalCta()}
+  `;
+}
+
+function renderCatalogHero(title, intro, image) {
+  return `
+    <section class="page-hero">
+      <img class="page-hero__image" src="${image}" alt="${title}" />
+      <div class="page-hero__shade"></div>
+      <div class="page-hero__content reveal">
+        <span class="section-label">CUTRON</span>
+        <h1>${title}</h1>
+        <p>${intro}</p>
+        <div class="page-hero__actions">
+          ${button("contact.html", getStructure().quote, "primary", "arrow")}
+          ${button("support.html", nav[3]?.label || "Support", "secondary", "support")}
+        </div>
+      </div>
+    </section>
   `;
 }
 
@@ -433,11 +560,73 @@ function renderSystemArchitecture() {
 
 export function renderDetailPage(pageKey) {
   const page = pages[pageKey];
+  if (!page) return renderCategoryDetail(pageKey);
   return `
     ${renderPageHero(page)}
     ${renderPillars(page)}
     ${renderTechMatrix(page)}
     ${renderProcessSection(page)}
+    ${renderFinalCta()}
+  `;
+}
+
+export function renderCompanyPage() {
+  const s = getStructure();
+  return `
+    ${renderCatalogHero(s.expertise[1], s.expertise[2], assets.hero)}
+    ${renderHarsleExpertise()}
+    ${renderHarsleWhy()}
+    ${renderFinalCta()}
+  `;
+}
+
+export function renderSupportPage() {
+  const s = getStructure();
+  return `
+    ${renderCatalogHero(s.service[1], s.expertise[2], assets.smartFactory)}
+    ${renderHarsleService()}
+    ${renderSystemArchitecture()}
+    ${renderFinalCta()}
+  `;
+}
+
+export function renderShowcasePage() {
+  const s = getStructure();
+  return `
+    ${renderCatalogHero(s.contentBlocks[1][1], s.contentBlocks[1][2], assets.ecosystem)}
+    ${renderCaseStudies()}
+    ${renderHarsleProducts()}
+    ${renderFinalCta()}
+  `;
+}
+
+export function renderCategoryDetail(pageKey) {
+  const s = getStructure();
+  const product = s.products.find((item) => item.id === pageKey) || s.products.find((item) => item.href.includes(pageKey));
+  if (!product) return renderNotFound();
+  const page = {
+    title: product.title,
+    label: s.productIntro[0],
+    intro: product.text,
+    image: pageKey === "laser" ? assets.hero : assets.ecosystem,
+    icon: product.icon,
+    pillars: [
+      ["Premium configuration", "A technical recommendation built around material, part families, throughput and future automation."],
+      ["Production discipline", "Clean workflow logic from preparation to finished parts, without cheap catalogue positioning."],
+      ["Service continuity", "Installation, training and support planned as part of the production system."]
+    ],
+    matrix: [
+      ["System family", product.title],
+      ["Positioning", "Premium industrial manufacturing technology"],
+      ["Configuration", product.specs.join(", ")],
+      ["Support", "Consulting, installation, training and lifecycle service"]
+    ]
+  };
+  return `
+    ${renderPageHero(page)}
+    ${renderPillars(page)}
+    ${renderTechMatrix(page)}
+    ${renderHarsleService()}
     ${renderFinalCta()}
   `;
 }

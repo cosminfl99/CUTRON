@@ -6,8 +6,17 @@ Website multipage pentru CUTRON, parte din ecosistemul UZINEX.
 
 - `index.html`
 - `products.html`
+- `company.html`
+- `support.html`
+- `showcase.html`
 - `laser-cutting.html`
 - `press-brake.html`
+- `shearing-machine.html`
+- `hydraulic-press.html`
+- `punching-machine.html`
+- `rolling-machine.html`
+- `v-grooving-machine.html`
+- `panel-bender.html`
 - `automation.html`
 - `smart-factory.html`
 - `service-support.html`

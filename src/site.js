@@ -1,11 +1,15 @@
 import {
   renderContactPage,
+  renderCompanyPage,
+  renderCategoryDetail,
   renderDetailPage,
   renderFooter,
   renderHeader,
   renderHome,
   renderNotFound,
-  renderProductsPage
+  renderProductsPage,
+  renderShowcasePage,
+  renderSupportPage
 } from "./components.js";
 import { setLanguage, ui, updateDocumentMeta } from "./data.js";
 import { detectInitialLanguage } from "./i18n.js";
@@ -18,12 +22,21 @@ updateDocumentMeta(pageKey);
 
 const pageRenderers = {
   home: renderHome,
+  company: renderCompanyPage,
   products: renderProductsPage,
-  laser: () => renderDetailPage("laser"),
-  press: () => renderDetailPage("press"),
+  laser: () => renderCategoryDetail("laser"),
+  press: () => renderCategoryDetail("press"),
+  shearing: () => renderCategoryDetail("shearing"),
+  hydraulic: () => renderCategoryDetail("hydraulic"),
+  punching: () => renderCategoryDetail("punching"),
+  rolling: () => renderCategoryDetail("rolling"),
+  grooving: () => renderCategoryDetail("grooving"),
+  "panel-bender": () => renderCategoryDetail("panel-bender"),
   automation: () => renderDetailPage("automation"),
   smart: () => renderDetailPage("smart"),
   support: () => renderDetailPage("support"),
+  "support-hub": renderSupportPage,
+  showcase: renderShowcasePage,
   about: () => renderDetailPage("about"),
   contact: renderContactPage
 };
