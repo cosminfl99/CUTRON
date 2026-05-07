@@ -2,7 +2,6 @@ import {
   assets,
   caseStudies,
   currentLanguage,
-  megaMenu,
   nav,
   pages,
   performance,
@@ -115,8 +114,8 @@ export function renderHeader(currentPage) {
         <nav class="desktop-nav" aria-label="Primary navigation">
           ${links}
         </nav>
+        <a class="nav-cta" href="contact.html">${s.quote}</a>
         ${renderLanguageSwitcher()}
-        <a class="nav-cta" href="contact.html">${ui.navCta}</a>
         <button class="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-mobile-toggle>
           ${icon("menu")}
         </button>
@@ -149,27 +148,20 @@ function renderLanguageSwitcher(extraClass = "") {
 function renderMegaMenu() {
   const s = getStructure();
   return `
-    <div class="mega-panel">
+    <div class="mega-panel" aria-label="CUTRON product categories">
       <div class="mega-panel__inner">
-        <div class="mega-group mega-group--wide">
-          <span>${s.productIntro[0]}</span>
-          ${s.products
-            .slice(0, 4)
-            .map((product) => `<a href="${product.href}"><strong>${product.title}</strong><small>${product.text}</small></a>`)
-            .join("")}
-        </div>
-        <div class="mega-group mega-group--wide">
-          <span>Systems</span>
-          ${s.products
-            .slice(4)
-            .map((product) => `<a href="${product.href}"><strong>${product.title}</strong><small>${product.text}</small></a>`)
-            .join("")}
-        </div>
-        <div class="mega-feature">
-          <img src="${assets.goldMark}" alt="" />
-          <strong>Driven by Precision</strong>
-          <small>${ui.footer.text}</small>
-        </div>
+        ${s.products
+          .map(
+            (product) => `
+              <a class="mega-product mega-product--${product.id}" href="${product.href}">
+                <div class="mega-product__visual">
+                  ${machineVisual(product.visual)}
+                </div>
+                <strong>${product.title}</strong>
+              </a>
+            `
+          )
+          .join("")}
       </div>
     </div>
   `;
