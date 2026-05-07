@@ -3,8 +3,10 @@ import { DEFAULT_LANGUAGE, normalizeLanguage, supportedLanguages, translations }
 export const assets = {
   logoDark: "public/assets/cutron-logo-dark.webp",
   logoLight: "public/assets/cutron-logo-light.webp",
+  heroWordmark: "public/assets/cutron-hero-wordmark.webp",
   mark: "public/assets/cutron-mark.webp",
   goldMark: "public/assets/cutron-gold-mark.webp",
+  homeHero: "public/assets/cutron-home-hero.webp",
   hero: "public/assets/hero-industrial.webp",
   ecosystem: "public/assets/ecosystem-line.webp",
   smartFactory: "public/assets/smart-factory.webp"

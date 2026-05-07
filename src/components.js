@@ -227,21 +227,15 @@ function renderHero() {
   const s = getStructure();
   return `
     <section class="hero" id="top">
-      <img class="hero__image" src="${assets.hero}" alt="CUTRON" />
+      <img class="hero__image hero__image--home" src="${assets.homeHero}" alt="CUTRON premium sheet metal systems" />
       <div class="hero__shade"></div>
-      <div class="hero__metal-line"></div>
-      <div class="hero__content reveal">
-        <img class="hero__logo" src="${assets.logoDark}" alt="CUTRON Driven by Precision" />
-        <span class="hero__kicker">CUTRON industrial systems</span>
-        <h1>${s.hero[0]}</h1>
-        <p>${s.hero[1]}</p>
-        <div class="hero__actions">
-          ${button("products.html", s.hero[2], "primary", "factory")}
-          ${button("contact.html", s.hero[3], "secondary", "arrow")}
-        </div>
+      <div class="hero__center reveal">
+        <img class="hero__wordmark" src="${assets.heroWordmark}" alt="CUTRON" />
+        <h1>DRIVEN BY PRECISION</h1>
       </div>
-      <div class="hero__signal reveal">
-        ${(s.heroSignal || s.products.slice(0, 4).map((product) => product.title)).map((item) => `<span>${item}</span>`).join("")}
+      <div class="hero__actions hero__actions--center">
+        <a class="hero-button hero-button--light" href="products.html">${s.heroButtons?.[0] || s.hero[2]}</a>
+        <a class="hero-button hero-button--outline" href="contact.html">${s.heroButtons?.[1] || s.hero[3]}</a>
       </div>
     </section>
   `;

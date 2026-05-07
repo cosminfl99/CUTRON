@@ -550,9 +550,9 @@ select {
 
 .hero {
   position: relative;
-  min-height: calc(100svh - var(--header-height) - 44px);
-  display: flex;
-  align-items: center;
+  min-height: calc(100svh - var(--header-height));
+  display: grid;
+  place-items: start center;
   overflow: hidden;
   border-bottom: 1px solid rgba(229, 231, 234, 0.11);
   background: var(--matte-black);
@@ -568,9 +568,9 @@ select {
 }
 
 .hero__image {
-  object-position: center right;
-  transform: scale(1.02);
-  animation: heroDrift 18s ease-in-out infinite alternate;
+  object-position: center center;
+  transform: scale(1.01);
+  animation: heroDrift 22s ease-in-out infinite alternate;
 }
 
 .hero__shade,
@@ -580,6 +580,12 @@ select {
   background:
     linear-gradient(90deg, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.76) 34%, rgba(0, 0, 0, 0.22) 78%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0.78) 100%);
+}
+
+.hero__shade {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.46) 0%, rgba(0, 0, 0, 0.08) 34%, rgba(0, 0, 0, 0.72) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.46) 0%, transparent 28%, transparent 72%, rgba(0, 0, 0, 0.42) 100%);
 }
 
 .hero__metal-line {
@@ -597,6 +603,23 @@ select {
   width: min(760px, calc(100% - 72px));
   margin-left: max(36px, calc((100vw - var(--section-max)) / 2 + 36px));
   padding: 66px 0 126px;
+}
+
+.hero__center {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 1180px);
+  padding: clamp(44px, 7vh, 74px) 34px 0;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.hero__wordmark {
+  width: min(360px, 38vw);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.58));
 }
 
 .hero__logo {
@@ -624,6 +647,15 @@ select {
   letter-spacing: 0;
 }
 
+.hero__center h1 {
+  margin-top: 22px;
+  max-width: 1120px;
+  font-size: clamp(42px, 5.2vw, 78px);
+  line-height: 0.98;
+  font-weight: 760;
+  text-shadow: 0 16px 38px rgba(0, 0, 0, 0.68);
+}
+
 .hero p,
 .page-hero p,
 .section-intro p,
@@ -645,6 +677,58 @@ select {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
+}
+
+.hero__actions--center {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: clamp(38px, 7vh, 74px);
+  margin: 0;
+  transform: translateX(-50%);
+  justify-content: center;
+  gap: clamp(36px, 7vw, 110px);
+}
+
+.hero-button {
+  min-width: 142px;
+  min-height: 44px;
+  padding: 0 26px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: transform 220ms ease, background 220ms ease, border-color 220ms ease, color 220ms ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+}
+
+.hero-button--light {
+  border: 1px solid rgba(255, 255, 255, 0.94);
+  color: #050505;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.hero-button--outline {
+  border: 1px solid rgba(229, 231, 234, 0.82);
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.hero-button--light:hover {
+  background: var(--chrome);
+}
+
+.hero-button--outline:hover {
+  border-color: rgba(200, 164, 93, 0.86);
+  background: rgba(200, 164, 93, 0.12);
 }
 
 .button {
@@ -2061,14 +2145,23 @@ select {
   }
 
   .hero {
-    min-height: calc(100svh - var(--header-height) - 44px);
+    min-height: calc(100svh - var(--header-height));
   }
 
-  .hero__shade,
   .page-hero__shade {
     background:
       linear-gradient(90deg, rgba(0, 0, 0, 0.93), rgba(0, 0, 0, 0.64)),
       linear-gradient(180deg, rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.86));
+  }
+
+  .hero__shade {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.18) 42%, rgba(0, 0, 0, 0.82) 100%),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.4), transparent, rgba(0, 0, 0, 0.4));
+  }
+
+  .hero__image {
+    object-position: center center;
   }
 
   .hero__content,
@@ -2083,9 +2176,30 @@ select {
     height: 88px;
   }
 
-  .hero h1 {
-    font-size: 44px;
+  .hero__center {
+    padding: 48px 20px 0;
+  }
+
+  .hero__wordmark {
+    width: min(280px, 78vw);
+  }
+
+  .hero__center h1 {
+    margin-top: 18px;
+    font-size: clamp(34px, 9.5vw, 48px);
     line-height: 1.02;
+  }
+
+  .hero__actions--center {
+    bottom: 28px;
+    width: calc(100% - 56px);
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-button {
+    width: min(260px, 100%);
   }
 
   .page-hero h1,
